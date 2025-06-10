@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllProducts, saveProduct, deleteProductById } from '../controllers/productController.js';
+import { getAllProducts, saveProduct, deleteProductById, updateProductById } from '../controllers/productController.js';
 
 const productRouter = express.Router();
 
@@ -10,7 +10,10 @@ productRouter.get('/', getAllProducts);
 productRouter.post('/', saveProduct);
 
 // DELETE a product by productID
-productRouter.delete('/:productID', deleteProductById); // <-- Add this line
+productRouter.delete('/:productID', deleteProductById);
+
+// PUT (update) a product by productID
+productRouter.put('/:productID', updateProductById);
 
 //export the productRouter
 export default productRouter;

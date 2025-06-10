@@ -51,3 +51,30 @@ export const deleteProductById = async (req, res) => {
         res.status(500).send("Error deleting product: " + error.message);
     }
 };
+
+//Function to update a product by productID
+export const updateProductById = async (req, res) => {
+
+    if (!isAdmin(req)) {
+        return res.status(403).send("Forbidden: Only admins can update products");
+    }
+
+    const productID = req.params.productID;
+    const updateData = req.body;
+    
+    try {
+        const updatedProduct = await Product_model.findOneAndUpdate(
+            { productID: productID },
+            updateData,
+            { new: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).send("Product not found");
+        }
+
+        res.send(`Product with ID ${productID} was updated successfully`);
+    } catch (error) {
+        res.status(500).send("Error updating product: " + error.message);
+    }
+};
