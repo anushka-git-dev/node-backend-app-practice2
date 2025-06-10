@@ -61,7 +61,7 @@ export const updateProductById = async (req, res) => {
 
     const productID = req.params.productID;
     const updateData = req.body;
-    
+
     try {
         const updatedProduct = await Product_model.findOneAndUpdate(
             { productID: productID },
@@ -78,3 +78,21 @@ export const updateProductById = async (req, res) => {
         res.status(500).send("Error updating product: " + error.message);
     }
 };
+
+//Function to get one product by productID
+export async function getProductById(req, res) {
+    const productID = req.params.productID;
+
+    try {
+        const product = await Product_model.findOne({ productID: productID });
+        if (!product) {
+            return res.status(404).send("Product not found");
+        }
+        if (!product.isAvailable && !isAdmin(req)) {
+            return res.status(403).send("Forbidden: Product is not available for public viewing");
+        }
+        res.send(product);
+    } catch (error) {
+        res.status(500).send("Error retrieving product: " + error.message);
+    }
+}
