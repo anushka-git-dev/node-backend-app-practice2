@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import studentRouter from "./routes/studentRouter.js";
 import userRouter from "./routes/userRouter.js";
 import productRouter from "./routes/productRouter.js";
+import orderRouter from "./routes/orderRouter.js";
 import jwt from "jsonwebtoken";
 
 //create express app
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 app.use("/students", studentRouter);
 app.use("/users", userRouter);
 app.use("/products", productRouter);
+app.use("/orders", orderRouter);
 
 
 //Connect to database
